@@ -23,11 +23,15 @@ import UIKit
 
 final class SPStorkPresentingAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
+    var containerView: UIView!
+    
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
         guard let presentedViewController = transitionContext.viewController(forKey: .to) else { return }
         
-        let containerView = transitionContext.containerView
+        containerView = transitionContext.containerView
+        containerView.backgroundColor = SPStorkTransitioningDelegate.backgroundColor
+        containerView.window?.subviews.last?.subviews.first?.backgroundColor = .clear
         containerView.addSubview(presentedViewController.view)
 
         let finalFrameForPresentedView = transitionContext.finalFrame(for: presentedViewController)
@@ -45,6 +49,12 @@ final class SPStorkPresentingAnimationController: NSObject, UIViewControllerAnim
         }, completion: { finished in
             transitionContext.completeTransition(finished)
         })
+    }
+    
+    func changeBackground() {
+        UIView.animate(withDuration: 0.3) {
+            self.containerView.backgroundColor = SPStorkTransitioningDelegate.backgroundColor
+        }
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {

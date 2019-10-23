@@ -23,6 +23,10 @@ import UIKit
 
 public final class SPStorkTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
+    public static var backgroundColor: UIColor = .black
+    // TODO: Dont use static
+    static var presentingAnimation = SPStorkPresentingAnimationController()
+    
     public var swipeToDismissEnabled: Bool = true
     public var tapAroundToDismissEnabled: Bool = true
     public var showCloseButton: Bool = false
@@ -56,8 +60,12 @@ public final class SPStorkTransitioningDelegate: NSObject, UIViewControllerTrans
         return controller
     }
     
+    public class func changeBackground() {
+        presentingAnimation.changeBackground()
+    }
+    
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SPStorkPresentingAnimationController()
+        return SPStorkTransitioningDelegate.presentingAnimation
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
