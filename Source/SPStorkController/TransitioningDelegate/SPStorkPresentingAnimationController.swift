@@ -52,6 +52,10 @@ final class SPStorkPresentingAnimationController: NSObject, UIViewControllerAnim
     }
     
     func changeBackground() {
+        if containerView == nil {
+            return
+        }
+        
         UIView.animate(withDuration: 0.3) {
             self.containerView.backgroundColor = SPStorkTransitioningDelegate.backgroundColor
         }
